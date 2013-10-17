@@ -17,4 +17,7 @@ class Post
     update_attribute :archived, true
   end
 
+  has_many :comments, dependent: :destroy
+
+
 end

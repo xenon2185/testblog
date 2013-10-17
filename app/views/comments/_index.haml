@@ -1,0 +1,10 @@
+- post.comments.each do |comment|
+  .comment
+    %h5
+      = comment.title
+      %small
+        = "#{comment.user} - #{comment.created_at.strftime("%Y-%m-%d %H:%M")}"
+      - if comment.user == current_user
+        = link_to "delete", post_comment_path(post,comment), method: :delete, class: 'comment__button--delete', confirm: 'Sure?'
+        = link_to "edit", edit_post_comment_path(post,comment), class: 'comment__button'
+    %p= comment.body

@@ -10,3 +10,12 @@
   .post__tags-list.tagsinput
     - post.tags_array.each do |tag|
       = content_tag :span, tag, class: 'tag'
+
+.comments
+  %h3 Comments
+  = render "comments/index"
+  
+
+.new-comment
+  %h4 New Comment
+  = render "comments/form"

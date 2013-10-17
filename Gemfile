@@ -29,6 +29,7 @@ group :development do
   gem 'hub', require: nil
   gem 'yell-rails'
   gem 'pry'
+  gem 'debugger'
 end
 
 group :development, :test do
