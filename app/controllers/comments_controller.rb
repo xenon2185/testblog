@@ -32,4 +32,20 @@ class CommentsController < ApplicationController
     redirect_to comment.post, notice: notice
   end
 
+  def vote_up
+    comment = Comment.find(params[:comment_id])
+    vote = comment.votes.build(type: :up)
+    vote.user = current_user
+    vote.save
+    redirect_to post_path(comment.post), notice: "You just bumped up comment '#{comment.title}'"
+  end
+
+  def vote_down
+    comment = Comment.find(params[:comment_id])
+    vote = comment.votes.build(type: :down)
+    vote.user = current_user
+    vote.save
+    redirect_to post_path(comment.post), notice: "You just lessen comment '#{comment.title}'"
+  end
+
 end

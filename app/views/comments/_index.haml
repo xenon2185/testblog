@@ -1,10 +1,18 @@
 - post.comments.each do |comment|
   .comment
-    %h5
-      = comment.title
-      %small
-        = "#{comment.user} - #{comment.created_at.localtime.strftime("%d/%m/%Y : %H:%M")}"
-      - if comment.user == current_user
-        = link_to "delete", post_comment_path(post,comment), method: :delete, class: 'comment__button--delete', confirm: 'Sure?'
-        = link_to "edit", edit_post_comment_path(post,comment), class: 'comment__button'
-    %p= comment.body
+    .comment-header
+      %h5
+        = comment.title
+        %small
+          = "#{comment.user} - #{comment.created_at.localtime.strftime("%d/%m/%Y : %H:%M")}"
+      .comment-buttons
+        = link_to "Vote UP (#{comment.votes.where(type: :up).count})", 
+          post_comment_vote_up_path(post,comment), method: :post
+        = link_to "Vote DOWN (#{comment.votes.where(type: :down).count})", 
+          post_comment_vote_down_path(post,comment), method: :post
+        - if comment.user == current_user
+          = link_to "edit", edit_post_comment_path(post,comment)
+          = link_to "delete", post_comment_path(post,comment), method: :delete, class: 'btn-danger', confirm: 'Sure?'
+          
+    .comment-body
+      %p= comment.body

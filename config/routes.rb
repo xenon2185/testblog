@@ -9,6 +9,9 @@ Easyblog::Application.routes.draw do
     member do
       post :mark_archived
     end
-    resources :comments
+    resources :comments do
+      post :vote_up
+      post :vote_down
+    end
   end
 end
