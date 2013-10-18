@@ -29,6 +29,8 @@ class PostsController < ApplicationController
   def show
     @post = Post.find(params[:id])
     @comment = Comment.new
+    @comments = Comment.desc(:created_at)
+    @not_abusive_comments = Comment.not_abusive
   end
 
   def mark_archived

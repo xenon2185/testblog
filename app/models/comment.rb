@@ -12,4 +12,6 @@ class Comment
   belongs_to :user
   has_many :votes
 
+  def self.not_abusive;  where(abusive: false) end
+
 end

@@ -49,4 +49,11 @@ class CommentsController < ApplicationController
     redirect_to post_path(comment.post), notice: "You've just voted down comment '#{comment.title}'"
   end
 
+  def mark_not_abusive
+    comment = Comment.find(params[:comment_id])
+    comment.abusive = false
+    comment.save
+    redirect_to post_path(comment.post), notice: "Comment '#{comment.title}' marked as not abusive."
+  end
+
 end

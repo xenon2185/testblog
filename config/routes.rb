@@ -12,6 +12,7 @@ Easyblog::Application.routes.draw do
     resources :comments do
       post :vote_up
       post :vote_down
+      post :mark_not_abusive
     end
   end
 end
