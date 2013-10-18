@@ -33,11 +33,11 @@ class CommentsController < ApplicationController
   end
 
   def vote_up
-    comment = Comment.find(params[:comment_id])
+    comment = Comment.find(params[:id])
     if already_voted?(comment)
       redirect_to post_path(comment.post), alert: "You've already voted on comment '#{comment.title}'"
     else
-      vote = comment.votes.build(type: :up)
+      vote = comment.votes.build(value: 1)
       vote.user = current_user
       vote.save
       redirect_to post_path(comment.post), notice: "You've just voted up comment '#{comment.title}'"
@@ -45,20 +45,19 @@ class CommentsController < ApplicationController
   end
 
   def vote_down
-    comment = Comment.find(params[:comment_id])
+    comment = Comment.find(params[:id])
     if already_voted?(comment)
       redirect_to post_path(comment.post), alert: "You've already voted on comment '#{comment.title}'"
     else
-      vote = comment.votes.build(type: :down)
+      vote = comment.votes.build(value: -1)
       vote.user = current_user
       vote.save
-      comment.update_attributes(abusive: true) if comment.votes.where(type: :down).count == 3
       redirect_to post_path(comment.post), notice: "You've just voted down comment '#{comment.title}'"
     end
   end
 
-  def mark_not_abusive
-    comment = Comment.find(params[:comment_id])
+  def mark_as_not_abusive
+    comment = Comment.find(params[:id])
     comment.abusive = false
     comment.save
     redirect_to post_path(comment.post), notice: "Comment '#{comment.title}' marked as not abusive."

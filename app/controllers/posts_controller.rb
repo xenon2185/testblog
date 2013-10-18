@@ -2,7 +2,8 @@ class PostsController < ApplicationController
   before_filter :authenticate_user!
   expose_decorated(:posts)
   expose_decorated(:post)
-  expose(:tag_cloud) { [] }
+  expose(:tag_cloud) { Post.tag_cloud }
+  expose(:comments) { post.user == current_user ? post.comments : post.comments.not_abusive  }
 
   def index
   end
@@ -27,10 +28,7 @@ class PostsController < ApplicationController
   end
 
   def show
-    @post = Post.find(params[:id])
     @comment = Comment.new
-    @comments = Comment.desc(:created_at)
-    @not_abusive_comments = Comment.not_abusive
   end
 
   def mark_archived
