@@ -37,7 +37,7 @@ class CommentsController < ApplicationController
     vote = comment.votes.build(type: :up)
     vote.user = current_user
     vote.save
-    redirect_to post_path(comment.post), notice: "You just bumped up comment '#{comment.title}'"
+    redirect_to post_path(comment.post), notice: "You've just voted up comment '#{comment.title}'"
   end
 
   def vote_down
@@ -45,7 +45,8 @@ class CommentsController < ApplicationController
     vote = comment.votes.build(type: :down)
     vote.user = current_user
     vote.save
-    redirect_to post_path(comment.post), notice: "You just lessen comment '#{comment.title}'"
+    comment.update_attributes(abusive: true) if comment.votes.where(type: :down).count == 3
+    redirect_to post_path(comment.post), notice: "You've just voted down comment '#{comment.title}'"
   end
 
 end

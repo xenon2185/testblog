@@ -1,4 +1,4 @@
-- post.comments.each do |comment|
+- post.comments.where(abusive: false).each do |comment|
   .comment
     .comment-header
       %h5
