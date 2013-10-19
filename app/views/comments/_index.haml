@@ -12,7 +12,7 @@
           = link_to "Vote DOWN (#{comment.votes.where(value: -1).count})", 
             vote_down_post_comment_path(post,comment), method: :post
         - if post.user == current_user && comment.abusive == true
-          = link_to "not abusive", mark_not_abusive_post_comment_path(post,comment), method: :post
+          = link_to "not abusive", mark_as_not_abusive_post_comment_path(post,comment), method: :post
         - if comment.user == current_user
           = link_to "edit", edit_post_comment_path(post,comment)
           = link_to "delete", post_comment_path(post,comment), method: :delete, class: 'btn-danger', confirm: 'Sure?'
